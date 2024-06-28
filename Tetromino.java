@@ -64,4 +64,41 @@ public class Tetromino {
         }
         return true;
     }
+    public void rotate(boolean[][] board) {
+        boolean[][] rotatedShape = rotateShape();
+
+        if (canPlace(rotatedShape, x, y, board)) {
+            shape = rotatedShape;
+        }
+    }
+    private boolean[][] rotateShape() {
+        int numRows = shape.length;
+        int numCols = shape[0].length;
+        boolean[][] newShape = new boolean[numCols][numRows];
+
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numCols; c++) {
+                newShape[c][numRows - 1 - r] = shape[r][c];
+            }
+        }
+
+        return newShape;
+    }
+
+    private boolean canPlace(boolean[][] shape, int x, int y, boolean[][] board) {
+        for (int row = 0; row < shape.length; row++) {
+            for (int col = 0; col < shape[row].length; col++) {
+                if (shape[row][col]) {
+                    int boardRow = y + row;
+                    int boardCol = x + col;
+                    if (boardRow < 0 || boardRow >= GamePanel.ROWS ||
+                            boardCol < 0 || boardCol >= GamePanel.COLS ||
+                            board[boardRow][boardCol]) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }

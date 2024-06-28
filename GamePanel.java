@@ -30,6 +30,9 @@ class GamePanel extends JPanel {
                     case KeyEvent.VK_RIGHT:
                         currentTetromino.moveRight(board);
                         break;
+                    case KeyEvent.VK_UP:
+                        currentTetromino.rotate(board);
+                        break;
                 }
                 repaint();
             }
