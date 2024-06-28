@@ -17,4 +17,9 @@ public class Tetromino {
     public int getY() {
         return y;
     }
+
+    public boolean isAtBottom() {
+        return y >= GamePanel.ROWS - 1;
+    }
+
 }
