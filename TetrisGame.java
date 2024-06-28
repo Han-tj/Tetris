@@ -10,7 +10,7 @@ public class TetrisGame {
 
     public TetrisGame() {
         board = new GameBoard();
-        currentTetromino = new Tetromino(5, 0); // 从顶部中间位置开始
+        currentTetromino = new Tetromino(GamePanel.COLS / 2, 0, Shapes.L_SHAPE);
     }
 
     public void startGame() {

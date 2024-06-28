@@ -14,7 +14,8 @@ class GamePanel extends JPanel {
 
     public GamePanel() {
         setPreferredSize(new Dimension(COLS * CELL_SIZE, ROWS * CELL_SIZE));
-        currentTetromino = new Tetromino(5, 0);
+        // 创建一个新的L形方块
+        currentTetromino = new Tetromino(COLS / 2, 0, Shapes.L_SHAPE);
         startGame();
     }
 
@@ -51,7 +52,7 @@ class GamePanel extends JPanel {
         } else {
             // 碰撞发生，固定方块并创建新的方块
             board[currentTetromino.getY()][currentTetromino.getX()] = true;
-            currentTetromino = new Tetromino(COLS / 2, 0);
+            currentTetromino = new Tetromino(COLS / 2, 0, Shapes.L_SHAPE);
         }
         if (!currentTetromino.canMoveDown(board)) {
             // 固定当前形状到面板
