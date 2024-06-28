@@ -20,7 +20,7 @@ public class TetrisGame {
 
             // 暂停一段时间
             try {
-                Thread.sleep(1000); // 暂停一秒
+                Thread.sleep(10); // 暂停一秒
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -23,23 +23,27 @@ class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // 绘制背景和固定的方块
+
+        // 绘制已经沉积的方块
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 if (board[row][col]) {
-                    g.setColor(Color.BLUE); // 已固定的方块颜色
+                    g.setColor(Color.BLUE); // 可以选择不同的颜色
                     g.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 }
             }
         }
-        // 绘制正在下落的形状
-        g.setColor(Color.RED);
-        for (int row = 0; row < currentTetromino.shape.length; row++) {
-            for (int col = 0; col < currentTetromino.shape[row].length; col++) {
-                if (currentTetromino.shape[row][col]) {
-                    g.fillRect((currentTetromino.getX() + col) * CELL_SIZE,
-                            (currentTetromino.getY() + row) * CELL_SIZE,
-                            CELL_SIZE, CELL_SIZE);
+
+        // 绘制当前下落的方块
+        if (currentTetromino != null) {
+            g.setColor(Color.RED);
+            for (int row = 0; row < currentTetromino.shape.length; row++) {
+                for (int col = 0; col < currentTetromino.shape[row].length; col++) {
+                    if (currentTetromino.shape[row][col]) {
+                        g.fillRect((currentTetromino.getX() + col) * CELL_SIZE,
+                                (currentTetromino.getY() + row) * CELL_SIZE,
+                                CELL_SIZE, CELL_SIZE);
+                    }
                 }
             }
         }
