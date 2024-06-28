@@ -31,11 +31,17 @@ class GamePanel extends JPanel {
                 }
             }
         }
-        // 绘制正在下落的方块
+        // 绘制正在下落的形状
         g.setColor(Color.RED);
-        g.fillRect(currentTetromino.getX() * CELL_SIZE,
-                currentTetromino.getY() * CELL_SIZE,
-                CELL_SIZE, CELL_SIZE);
+        for (int row = 0; row < currentTetromino.shape.length; row++) {
+            for (int col = 0; col < currentTetromino.shape[row].length; col++) {
+                if (currentTetromino.shape[row][col]) {
+                    g.fillRect((currentTetromino.getX() + col) * CELL_SIZE,
+                            (currentTetromino.getY() + row) * CELL_SIZE,
+                            CELL_SIZE, CELL_SIZE);
+                }
+            }
+        }
     }
 
     private void updateGame() {
@@ -46,6 +52,18 @@ class GamePanel extends JPanel {
             // 碰撞发生，固定方块并创建新的方块
             board[currentTetromino.getY()][currentTetromino.getX()] = true;
             currentTetromino = new Tetromino(COLS / 2, 0);
+        }
+        if (!currentTetromino.canMoveDown(board)) {
+            // 固定当前形状到面板
+            for (int row = 0; row < currentTetromino.shape.length; row++) {
+                for (int col = 0; col < currentTetromino.shape[row].length; col++) {
+                    if (currentTetromino.shape[row][col]) {
+                        board[currentTetromino.getY() + row][currentTetromino.getX() + col] = true;
+                    }
+                }
+            }
+            // 创建新的L形方块
+            currentTetromino = new Tetromino(COLS / 2, 0, Shapes.L_SHAPE);
         }
     }
 

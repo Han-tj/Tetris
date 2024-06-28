@@ -1,9 +1,11 @@
 public class Tetromino {
     private int x, y; // 方块的位置
+    boolean[][] shape;
 
-    public Tetromino(int startX, int startY) {
-        x = startX;
-        y = startY;
+    public Tetromino(int x, int y, boolean[][] shape) {
+        this.x = x;
+        this.y = y;
+        this.shape = shape;
     }
 
     public void moveDown() {
@@ -23,9 +25,17 @@ public class Tetromino {
     }
 
     public boolean canMoveDown(boolean[][] board) {
-        int nextY = y + 1;
-        if (nextY >= GamePanel.ROWS) return false; // 到达底部
-        if (board[nextY][x]) return false; // 下面有方块
+        for (int row = 0; row < shape.length; row++) {
+            for (int col = 0; col < shape[row].length; col++) {
+                if (shape[row][col]) {
+                    int boardRow = y + row + 1;
+                    int boardCol = x + col;
+                    if (boardRow >= GamePanel.ROWS || board[boardRow][boardCol]) {
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
 }
