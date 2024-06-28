@@ -33,6 +33,9 @@ class GamePanel extends JPanel {
                     case KeyEvent.VK_UP:
                         currentTetromino.rotate(board);
                         break;
+                    case KeyEvent.VK_DOWN:
+                        currentTetromino.moveDownQuickly(board);
+                        break;
                 }
                 repaint();
             }
@@ -99,6 +102,7 @@ private void updateGame() {
             }
         }
         currentTetromino = new Tetromino(COLS / 2, 0, Shapes.L_SHAPE);
+        checkAndClearRows(); // 检查并清除完整的行
     }
 
 
@@ -124,5 +128,32 @@ private void updateGame() {
         }
         return false;
     }
+    private void checkAndClearRows() {
+        for (int row = 0; row < ROWS; row++) {
+            if (isRowFull(row)) {
+                clearRow(row);
+            }
+        }
+    }
 
+    private boolean isRowFull(int row) {
+        for (int col = 0; col < COLS; col++) {
+            if (!board[row][col]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void clearRow(int row) {
+        for (int r = row; r > 0; r--) {
+            for (int col = 0; col < COLS; col++) {
+                board[r][col] = board[r - 1][col];
+            }
+        }
+        // 清除顶行
+        for (int col = 0; col < COLS; col++) {
+            board[0][col] = false;
+        }
+    }
 }

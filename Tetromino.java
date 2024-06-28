@@ -101,4 +101,9 @@ public class Tetromino {
         }
         return true;
     }
+    public void moveDownQuickly(boolean[][] board) {
+        if (canMoveDown(board)) {
+            y++;
+        }
+    }
 }
