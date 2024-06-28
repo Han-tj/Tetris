@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 class GamePanel extends JPanel {
@@ -17,6 +19,21 @@ class GamePanel extends JPanel {
         // 创建一个新的L形方块
         currentTetromino = new Tetromino(COLS / 2, 0, Shapes.L_SHAPE);
         startGame();
+        setFocusable(true);
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT:
+                        currentTetromino.moveLeft(board);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        currentTetromino.moveRight(board);
+                        break;
+                }
+                repaint();
+            }
+        });
     }
 
     // 在 paintComponent 中添加代码绘制整个面板
@@ -49,28 +66,6 @@ class GamePanel extends JPanel {
         }
     }
 
-//    private void updateGame() {
-//        if (currentTetromino.canMoveDown(board)) {
-//            // 如果可以继续下移，则移动方块
-//            currentTetromino.moveDown();
-//        } else {
-//            // 碰撞发生，固定方块并创建新的方块
-//            board[currentTetromino.getY()][currentTetromino.getX()] = true;
-//            currentTetromino = new Tetromino(COLS / 2, 0, Shapes.L_SHAPE);
-//        }
-//        if (!currentTetromino.canMoveDown(board)) {
-//            // 固定当前形状到面板
-//            for (int row = 0; row < currentTetromino.shape.length; row++) {
-//                for (int col = 0; col < currentTetromino.shape[row].length; col++) {
-//                    if (currentTetromino.shape[row][col]) {
-//                        board[currentTetromino.getY() + row][currentTetromino.getX() + col] = true;
-//                    }
-//                }
-//            }
-//            // 创建新的L形方块
-//            currentTetromino = new Tetromino(COLS / 2, 0, Shapes.L_SHAPE);
-//        }
-//    }
 private void updateGame() {
     // 当前方块到达底部，固定方块
     if (currentTetromino.isAtBottom()) {

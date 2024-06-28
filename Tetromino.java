@@ -38,4 +38,30 @@ public class Tetromino {
         }
         return true;
     }
+
+    public void moveLeft(boolean[][] board) {
+        if (canMove(-1, board)) {
+            x--;
+        }
+    }
+
+    public void moveRight(boolean[][] board) {
+        if (canMove(1, board)) {
+            x++;
+        }
+    }
+
+    private boolean canMove(int deltaX, boolean[][] board) {
+        for (int row = 0; row < shape.length; row++) {
+            for (int col = 0; col < shape[row].length; col++) {
+                if (shape[row][col]) {
+                    int newCol = x + col + deltaX;
+                    if (newCol < 0 || newCol >= GamePanel.COLS || board[y + row][newCol]) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }
