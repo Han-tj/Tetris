@@ -39,14 +39,13 @@ class GamePanel extends JPanel {
     }
 
     private void updateGame() {
-        if (currentTetromino.isAtBottom()) {
-            // 将方块加入到面板中
-            board[currentTetromino.getY()][currentTetromino.getX()] = true;
-            // 创建新的方块
-            currentTetromino = new Tetromino(COLS / 2, 0);
-        } else {
-            // 移动方块
+        if (currentTetromino.canMoveDown(board)) {
+            // 如果可以继续下移，则移动方块
             currentTetromino.moveDown();
+        } else {
+            // 碰撞发生，固定方块并创建新的方块
+            board[currentTetromino.getY()][currentTetromino.getX()] = true;
+            currentTetromino = new Tetromino(COLS / 2, 0);
         }
     }
 

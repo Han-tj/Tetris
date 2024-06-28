@@ -22,4 +22,10 @@ public class Tetromino {
         return y >= GamePanel.ROWS - 1;
     }
 
+    public boolean canMoveDown(boolean[][] board) {
+        int nextY = y + 1;
+        if (nextY >= GamePanel.ROWS) return false; // 到达底部
+        if (board[nextY][x]) return false; // 下面有方块
+        return true;
+    }
 }
